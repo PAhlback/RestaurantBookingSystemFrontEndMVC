@@ -1,9 +1,90 @@
-html {
-  font-size: 14px;
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+
+}
+
+main {
+
+}
+
+header {
+
+}
+
+footer {
+    margin-top: auto;
+    min-height: 10vh;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+main .main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.homepage-hero-image {
+    background-image: url("/images/OIG1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.homepage-hero-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+.homepage-hero-image h2, .homepage-hero-image h1 {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+.homepage-hero-text h1 {
+   font-size: 8rem;
+   font-weight: 600;
+   font-family: 'Baskerville Old Face';
+}
+.homepage-introduction-container {
+    width: 70%;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.homepage-introduction-container p {
+    width: 50%;
+    align-self: center;
+}
+.homepage-introduction-container img {
+    width: 80%;
+    align-self: center;
+}
+
+
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -12,11 +93,5 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
 
-body {
-  margin-bottom: 60px;
-}
+
