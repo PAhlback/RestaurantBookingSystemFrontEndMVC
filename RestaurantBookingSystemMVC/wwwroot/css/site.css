@@ -5,15 +5,12 @@ html, body {
 }
 
 body {
-
 }
 
 main {
-
 }
 
 header {
-
 }
 
 footer {
@@ -38,7 +35,6 @@ main .main-container {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin-bottom: 2rem;
 }
 
 .homepage-hero-image {
@@ -47,26 +43,30 @@ main .main-container {
     background-position: center;
     background-repeat: no-repeat;
 }
-.homepage-hero-image::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-}
-.homepage-hero-image h1 {
-    position: relative;
-    z-index: 2;
-    color: white;
-}
+
+    .homepage-hero-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+    }
+
+    .homepage-hero-image h1 {
+        position: relative;
+        z-index: 10;
+        color: white;
+    }
+
 .homepage-hero-text h1 {
-   font-size: 8rem;
-   font-weight: 600;
-   font-family: 'Baskerville Old Face';
+    font-size: 8rem;
+    font-weight: 600;
+    font-family: 'Baskerville Old Face';
 }
+
 .homepage-introduction-container {
     width: 70%;
     display: flex;
@@ -74,10 +74,12 @@ main .main-container {
     justify-content: center;
     text-align: center;
 }
+
 .homepage-introduction-container p {
     width: 50%;
     align-self: center;
 }
+
 .homepage-introduction-container img {
     width: 80%;
     align-self: center;
@@ -88,6 +90,7 @@ main .main-container {
     background-color: rgb(255, 0, 0, 0.8);
     justify-content: space-evenly
 }
+
 .homepage-popular-menu-items {
     display: flex;
     flex-direction: column;
@@ -95,6 +98,7 @@ main .main-container {
     align-content: center;
     text-align: center;
 }
+
 .popular-menu-items {
     display: flex;
     justify-content: space-evenly;
@@ -104,16 +108,46 @@ main .main-container {
     gap: 1rem;
 }
 
+.menupage-hero-image {
+    background-image: url("/images/OIG3.hi20.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.menupage-hero-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+.menu-section {
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.menu-section h2 {
+    color: white;
+    font-family: 'Baskerville Old Face';
+}
+.menu-item-category-container {
+    margin: 2rem;
+    max-width: 60%;
+}
+
 
 @media (min-width: 768px) {
     html {
-    font-size: 16px;
-  }
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
-
-
-

@@ -1,7 +1,29 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using RestaurantBookingSystemMVC.Models.MenuItem
+@model List<MenuItem>
 
-<h2>Hello!</h2>
+<section class="homepage-container menupage-hero-image">
+    <section class="menu-section">
+        <h2 class="display-2 text-light"><strong>Menu</strong></h2>
+
+        @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
+        {
+            <article class="menu-item-category-container">
+                <h4 class="display-6 text-light">@category.Name</h4>
+
+                <section class="popular-menu-items">
+                    @foreach (var item in Model.Where(i => i.Category.Id == category.Id))
+                    {
+                        <article class="card bg-light mb-3 card-margin" style="max-width: 20rem">
+                            <div class="card-body">
+                                <h4 class="card-title">@item.Name</h4>
+                                <p class="card-text">@item.Description</p>
+                                <h6 class="card-subtitle mb-2 text-muted">@item.Price kr</h6>
+                            </div>
+                        </article>
+                    }
+                </section>
+            </article>
+        }
+
+    </section>
+</section>
