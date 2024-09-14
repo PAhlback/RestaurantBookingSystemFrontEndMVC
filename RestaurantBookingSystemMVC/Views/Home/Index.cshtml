@@ -1,4 +1,7 @@
-﻿@{
+﻿@using RestaurantBookingSystemMVC.Models.MenuItem
+@model ICollection<MenuItem>
+
+@{
     ViewData["Title"] = "Il Sogno";
 }
 
@@ -13,13 +16,32 @@
         <h3>Welcome to <strong style="color: forestgreen">Il Sogno</strong>,</h3>
         <h3>your favorite local Italian restaurant!</h3>
         <p>
-            Since 2004 we have been providing the locals with delicious Italian cuisine. The restaurant is owned and run by the Sogno family, who have been part of the 
+            Since 2004 we have been providing the locals with delicious Italian cuisine. The restaurant is owned and run by the Sogno family, who have been part of the
             local community since september 1980. Come by for a nice, comfortable, and familiar dining experience!
         </p>
-        <img src="~/images/OIG4.jpg" alt="A picture of the inside of an Italian restaurant."/>
+        <img src="~/images/OIG4.jpg" alt="A picture of the inside of an Italian restaurant." />
     </article>
 </section>
 
-<section class="homepage-popular-menu-items">
+<section class="homepage-container popular-menu-items-container">
+    <h3>Try one of our popular dishes!</h3>
+    <section class="homepage-popular-menu-items">
+        @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
+        {
+            <h4>@category.Name</h4>
 
+            <section class="popular-menu-items">
+                @foreach (var item in Model.Where(i => i.Category.Id == category.Id))
+                {
+                    <article class="card bg-light mb-3 card-margin" style="max-width: 20rem">
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Name</h4>
+                            <p class="card-text">@item.Description</p>
+                            <h6 class="card-subtitle mb-2 text-muted">@item.Price kr</h6>
+                        </div>
+                    </article>
+                }
+            </section>
+        }
+    </section>
 </section>
