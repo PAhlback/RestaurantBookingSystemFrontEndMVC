@@ -21,19 +21,30 @@ namespace RestaurantBookingSystemMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var response = await _httpClient.GetAsync(_baseUri + "menuitems/popular");
-
-            var json = await response.Content.ReadAsStringAsync();
-
-            // The deserializer was not mapping correctly due to case sensitivity.
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true
-            };
+                var response = await _httpClient.GetAsync(_baseUri + "menuitems/popular");
 
-            var popularItemsList = JsonSerializer.Deserialize<List<MenuItem>>(json, options);
+                var json = await response.Content.ReadAsStringAsync();
 
-            return View(popularItemsList);
+                // The deserializer was not mapping correctly due to case sensitivity.
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                
+                var popularItemsList = JsonSerializer.Deserialize<List<MenuItem>>(json, options);
+
+                if (popularItemsList == null)
+                {
+                    return View();
+                }
+
+                return View(popularItemsList);
+            }
+            catch (Exception ex) { }
+
+            return View();
         }
 
         public IActionResult Privacy()

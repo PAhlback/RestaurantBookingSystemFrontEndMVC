@@ -23,25 +23,29 @@
     </article>
 </section>
 
-<section class="homepage-container popular-menu-items-container">
-    <h3>Try one of our popular dishes!</h3>
-    <section class="homepage-popular-menu-items">
-        @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
-        {
-            <h4>@category.Name</h4>
+@if (Model != null)
+{
+    <section class="homepage-container popular-menu-items-container">
+        <h3>Try one of our popular dishes!</h3>
+        <section class="homepage-popular-menu-items">
+            @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
+            {
+                <h4>@category.Name</h4>
 
-            <section class="popular-menu-items">
-                @foreach (var item in Model.Where(i => i.Category.Id == category.Id))
-                {
-                    <article class="card bg-light mb-3 card-margin" style="max-width: 20rem">
-                        <div class="card-body">
-                            <h4 class="card-title">@item.Name</h4>
-                            <p class="card-text">@item.Description</p>
-                            <h6 class="card-subtitle mb-2 text-muted">@item.Price kr</h6>
-                        </div>
-                    </article>
-                }
-            </section>
-        }
+                <section class="popular-menu-items">
+                    @foreach (var item in Model.Where(i => i.Category.Id == category.Id))
+                    {
+                        <article class="card bg-light mb-3 card-margin" style="max-width: 20rem">
+                            <div class="card-body">
+                                <h4 class="card-title">@item.Name</h4>
+                                <p class="card-text">@item.Description</p>
+                                <h6 class="card-subtitle mb-2 text-muted">@item.Price kr</h6>
+                            </div>
+                        </article>
+                    }
+                </section>
+            }
+        </section>
     </section>
-</section>
+}
+
