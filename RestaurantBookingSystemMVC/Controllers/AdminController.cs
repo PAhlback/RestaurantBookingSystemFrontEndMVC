@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantBookingSystemMVC.Helpers;
+using RestaurantBookingSystemMVC.Models.MenuItem;
 using RestaurantBookingSystemMVC.Models.Reservation;
 using System.Text.Json;
 
@@ -23,16 +24,16 @@ namespace RestaurantBookingSystemMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Reservations()
+        public async Task<IActionResult> Menu()
         {
-            var response = await _httpClient.GetAsync(_baseUri + "reservations");
+            var response = await _httpClient.GetAsync(_baseUri + "menuitems");
 
             var json = await response.Content.ReadAsStringAsync();
             var jsonOptions = JsonHelper.JsonOptionsHelper();
 
-            var reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json, jsonOptions);
+            var menuItems = JsonSerializer.Deserialize<List<MenuItem>>(json, jsonOptions);
 
-            return View(reservations);
+            return View(menuItems);
         }
     }
 }

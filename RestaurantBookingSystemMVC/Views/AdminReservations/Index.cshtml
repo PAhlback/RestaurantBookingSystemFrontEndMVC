@@ -1,0 +1,85 @@
+﻿@using RestaurantBookingSystemMVC.Models.Reservation
+@model IEnumerable<Reservation>;
+
+@{
+    ViewData["Title"] = "Admin Reservations";
+    Layout = "_AdminLayout";
+    int iterator = 1;
+}
+
+<section class="admin-wrapper">
+    <section class="admin-content-window">
+        <h3 class="display-3">Reservations</h3>
+
+        <a asp-action="Create" asp-controller="AdminReservations" class="btn btn-outline-primary" style="margin-bottom: 1rem;">Create Reservation</a>
+
+        <table class="table table-hover" style="border: 1px solid gray">
+            <thead>
+                <tr>
+                    <th scope="col">Reservation Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Table#</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Number of Guests</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model)
+                {
+                    string rowClass = "table-primary";
+                    if (iterator % 2 == 0)
+                    {
+                        rowClass = "table-secondary";
+                    }
+
+                    <tr class="@rowClass">
+                        <th scope="row">@reservation.Id</th>
+                        <td>@reservation.DateAndTime.ToShortDateString()</td>
+                        <td>@reservation.DateAndTime.ToShortTimeString()</td>
+                        <td>@reservation.Table.TableNumber</td>
+                        <td>@reservation.Customer.Name</td>
+                        <td>@reservation.NumberOfGuests</td>
+
+                        @* Possible way of doing the edit, details and delete buttons *@
+                        <td>
+                            @* <a asp-page="./Edit" asp-route-id="@reservation.Id">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@reservation.Id">Details</a> *@
+
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Delete Reservation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete reservation for 
+                                                @reservation.Customer.Name 
+                                                on 
+                                                @reservation.DateAndTime.ToShortDateString() @reservation.DateAndTime.ToShortTimeString()?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="post" asp-action="Delete" style="display:inline;">
+                                                <input type="hidden" name="id" value="@reservation.Id" />
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    iterator++;
+                }
+            </tbody>
+        </table>
+    </section>
+</section>

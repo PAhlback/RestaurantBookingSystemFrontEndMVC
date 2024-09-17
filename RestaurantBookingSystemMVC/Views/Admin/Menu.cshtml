@@ -1,0 +1,49 @@
+﻿@using RestaurantBookingSystemMVC.Models.MenuItem
+@model IEnumerable<MenuItem>;
+
+@{
+    ViewData["Title"] = "Admin Menu";
+    Layout = "_AdminLayout";
+}
+
+<section class="admin-wrapper">
+    <section class="admin-content-window">
+        <h2 class="display-3">Menu</h2>
+
+        <table class="table table-hover" style="border: 1px solid gray">
+            <thead>
+                <tr>
+                    <th scope="col">Menuitem</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Available</th>
+                    <th scope="col">Popular</th>
+                </tr>
+            </thead>
+
+            @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
+            {
+                @* <h3 class="display-3">@category.Name</h3> *@
+
+                <tr class="table-dark">
+                    <th scope="row">@category.Name</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                @foreach (var item in Model.Where(i => i.Category.Id == category.Id))
+                {
+                    <tr class="table-secondary">
+                        <th scope="row">@item.Name</th>
+                        <td>@item.Price</td>
+                        <td>@item.Description</td>
+                        <td>@item.IsAvailable</td>
+                        <td>@item.IsPopular</td>
+                    </tr>
+                }
+            }
+        </table>
+    </section>
+</section>

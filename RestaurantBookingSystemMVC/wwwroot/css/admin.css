@@ -7,15 +7,15 @@
 
 .admin-nav-wrapper {
     display: flex;
-    overflow: hidden;
     background-color: lightgray;
     padding: 1rem;
     border-right: 1px solid gray;
+    width: auto;
 }
 .admin-nav ul li {
     border-bottom: 1px dashed black;
 }
 
-.admin-home {
+.admin-content-window {
     padding: 1rem;
 }
