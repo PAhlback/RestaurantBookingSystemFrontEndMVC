@@ -17,17 +17,29 @@ namespace RestaurantBookingSystemMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var response = await _httpClient.GetAsync(_baseUri + "menuitems");
-
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true
-            };
-            var json = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.GetAsync(_baseUri + "menuitems");
 
-            var menuItemList = JsonSerializer.Deserialize<List<MenuItem>>(json, options);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var json = await response.Content.ReadAsStringAsync();
 
-            return View(menuItemList);
+                var menuItemList = JsonSerializer.Deserialize<List<MenuItem>>(json, options);
+
+                if (menuItemList == null)
+                {
+                    return View();
+                }
+
+                return View(menuItemList);
+
+            }
+            catch (Exception ex) { }
+
+            return View();
         }
     }
 }

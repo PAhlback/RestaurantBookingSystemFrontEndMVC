@@ -1,0 +1,21 @@
+﻿.admin-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    min-height: 75vh;
+}
+
+.admin-nav-wrapper {
+    display: flex;
+    overflow: hidden;
+    background-color: lightgray;
+    padding: 1rem;
+    border-right: 1px solid gray;
+}
+.admin-nav ul li {
+    border-bottom: 1px dashed black;
+}
+
+.admin-home {
+    padding: 1rem;
+}

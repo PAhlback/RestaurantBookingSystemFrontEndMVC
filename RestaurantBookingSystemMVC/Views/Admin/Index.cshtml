@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    ViewData["AdminView"] = true;
+}
+
+<section class="admin-wrapper">
+    <div class="admin-nav-wrapper">
+        <nav class="admin-nav">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Reservations">Reservations</a>
+                </li>
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Menu">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <section class="admin-home">
+        <h2 class="display-3">Admin Page</h2>
+        <p class="lead">Use the navigation menu to the left.</p>
+    </section>
+</section>

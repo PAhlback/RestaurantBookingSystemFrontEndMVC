@@ -1,0 +1,57 @@
+﻿@using RestaurantBookingSystemMVC.Models.Reservation
+@model IEnumerable<Reservation>;
+
+@{
+    ViewData["Title"] = "Admin Reservations";
+}
+
+<section class="admin-wrapper">
+    <div class="admin-nav-wrapper">
+        <nav class="admin-nav">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Reservations">Reservations</a>
+                </li>
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Menu">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <section class="admin-home">
+        <h3 class="display-3">Reservations</h3>
+
+        <table class="table table-hover" style="border: 1px solid gray">
+            <thead>
+                <tr>
+                    <th scope="col">Reservation Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Table#</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Number of Guests</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model)
+                {
+                    string rowClass = "table-primary";
+                    if (reservation.Id % 2 == 0)
+                    {
+                        rowClass = "table-secondary";
+                    }
+
+                    <tr class="@rowClass">
+                        <th scope="row">@reservation.Id</th>
+                        <td>@reservation.DateAndTime.ToShortDateString()</td>
+                        <td>@reservation.DateAndTime.ToShortTimeString()</td>
+                        <td>@reservation.Table.TableNumber</td>
+                        <td>@reservation.Customer.Name</td>
+                        <td>@reservation.NumberOfGuests</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</section>

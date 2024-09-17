@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using RestaurantBookingSystemMVC.Helpers;
 using RestaurantBookingSystemMVC.Models;
 using RestaurantBookingSystemMVC.Models.MenuItem;
 using System.Diagnostics;
@@ -26,14 +28,9 @@ namespace RestaurantBookingSystemMVC.Controllers
                 var response = await _httpClient.GetAsync(_baseUri + "menuitems/popular");
 
                 var json = await response.Content.ReadAsStringAsync();
-
-                // The deserializer was not mapping correctly due to case sensitivity.
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
+                var jsonOptions = JsonHelper.JsonOptionsHelper();
                 
-                var popularItemsList = JsonSerializer.Deserialize<List<MenuItem>>(json, options);
+                var popularItemsList = JsonSerializer.Deserialize<List<MenuItem>>(json, jsonOptions);
 
                 if (popularItemsList == null)
                 {

@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>Il Sogno - @ViewData["Title"]</title>
     @* <title>@ViewData["Title"] - RestaurantBookingSystemMVC</title> *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RestaurantBookingSystemMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -26,15 +27,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
                         </li>
+                        @* Reservation to be implemented *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Reserve Table</a>
                         </li>
+                        @* About to be implemented *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">About</a>
                         </li>
+                        @* Contact to be implemented *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
                         </li>
+                        @* Login to be implemented *@
+                        @* Will lead to admin page upon successful login *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
                         </li>
