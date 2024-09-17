@@ -5,6 +5,8 @@
     ViewData["Title"] = "Admin Reservations";
     Layout = "_AdminLayout";
     int iterator = 1;
+    string rowClass = "table-primary";
+    DateOnly date = DateOnly.FromDateTime(Model.First().DateAndTime);
 }
 
 <section class="admin-wrapper">
@@ -16,30 +18,32 @@
         <table class="table table-hover" style="border: 1px solid gray">
             <thead>
                 <tr>
-                    <th scope="col">Reservation Id</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
                     <th scope="col">Table#</th>
                     <th scope="col">Customer Name</th>
                     <th scope="col">Number of Guests</th>
+                    <th scope="col">Id</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var reservation in Model)
                 {
-                    string rowClass = "table-primary";
-                    if (iterator % 2 == 0)
+                    DateOnly currentDate = DateOnly.FromDateTime(reservation.DateAndTime);
+                    if (date != currentDate)
                     {
-                        rowClass = "table-secondary";
+                        rowClass = rowClass == "table-primary" ? "table-secondary" : "table-primary";
+
+                        date = currentDate;
                     }
 
                     <tr class="@rowClass">
-                        <th scope="row">@reservation.Id</th>
-                        <td>@reservation.DateAndTime.ToShortDateString()</td>
+                        <th scope="row">@reservation.DateAndTime.ToShortDateString()</th>
                         <td>@reservation.DateAndTime.ToShortTimeString()</td>
                         <td>@reservation.Table.TableNumber</td>
                         <td>@reservation.Customer.Name</td>
                         <td>@reservation.NumberOfGuests</td>
+                        <td>@reservation.Id</td>
 
                         @* Possible way of doing the edit, details and delete buttons *@
                         <td>
@@ -47,7 +51,7 @@
                         <a asp-page="./Details" asp-route-id="@reservation.Id">Details</a> *@
 
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -73,7 +77,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </td>
                     </tr>
 

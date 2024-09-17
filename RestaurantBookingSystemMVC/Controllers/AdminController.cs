@@ -24,6 +24,7 @@ namespace RestaurantBookingSystemMVC.Controllers
             return View();
         }
 
+        // TODO: Move to separate controller.
         public async Task<IActionResult> Menu()
         {
             var response = await _httpClient.GetAsync(_baseUri + "menuitems");

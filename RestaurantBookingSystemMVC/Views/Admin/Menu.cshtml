@@ -39,8 +39,26 @@
                         <th scope="row">@item.Name</th>
                         <td>@item.Price</td>
                         <td>@item.Description</td>
-                        <td>@item.IsAvailable</td>
-                        <td>@item.IsPopular</td>
+                        <td>
+                            @if (item.IsAvailable)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsPopular)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                            }
+                        </td>
                     </tr>
                 }
             }
