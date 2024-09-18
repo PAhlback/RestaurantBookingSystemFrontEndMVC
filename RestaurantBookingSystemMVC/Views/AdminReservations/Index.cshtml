@@ -44,14 +44,12 @@
                         <td>@reservation.Customer.Name</td>
                         <td>@reservation.NumberOfGuests</td>
                         <td>@reservation.Id</td>
-
-                        @* Possible way of doing the edit, details and delete buttons *@
                         <td>
-                            @* <a asp-page="./Edit" asp-route-id="@reservation.Id">Edit</a>
-                        <a asp-page="./Details" asp-route-id="@reservation.Id">Details</a> *@
+                        @* Possibly add modal for editing *@
+                            <a asp-controller="AdminReservations" asp-action="Edit" asp-route-id=@reservation.Id class="btn btn-dark btn-sm">Edit</a>
 
-
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                            @* DELETE MODAL *@
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -77,10 +75,9 @@
                                     </div>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
-
-                    iterator++;
                 }
             </tbody>
         </table>

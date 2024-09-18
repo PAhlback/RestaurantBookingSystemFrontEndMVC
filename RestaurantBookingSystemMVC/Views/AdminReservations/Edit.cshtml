@@ -1,0 +1,52 @@
+﻿@using RestaurantBookingSystemMVC.Models.Reservation
+@model Reservation;
+@{
+    ViewData["Title"] = "Admin Reservation Edit";
+    Layout = "_AdminLayout";
+}
+
+<section class="admin-content-window">
+    <h2>Edit Reservation</h2>
+
+    <form method="post" asp-action="Edit">
+        <div class="form-group">
+            <label asp-for=NumberOfGuests>Guests</label>
+            <input asp-for=NumberOfGuests class="form-control" />
+            <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for=DateAndTime>Date and Time</label>
+            <input asp-for=DateAndTime class="form-control" />
+            <span asp-validation-for="DateAndTime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Email">Customer Email</label>
+            <input asp-for=Customer.Email class="form-control" />
+            <span asp-validation-for="Customer.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Name">Customer Name</label>
+            <input asp-for=Customer.Name class="form-control" />
+            <span asp-validation-for="Customer.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Customer.Phone">Customer Phone</label>
+            <input asp-for=Customer.Phone class="form-control" />
+            <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Table.Id">Table Id</label>
+            <input asp-for=Table.Id class="form-control" />
+            <span asp-validation-for="Table.Id" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Table.TableNumber">Table Number</label>
+            <input asp-for=Table.TableNumber class="form-control" />
+            <span asp-validation-for="Table.TableNumber" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</section>

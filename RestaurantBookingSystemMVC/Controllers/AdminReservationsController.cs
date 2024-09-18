@@ -2,6 +2,7 @@
 using RestaurantBookingSystemMVC.Helpers;
 using RestaurantBookingSystemMVC.Models.Reservation;
 using System.Net.Http;
+using System.Resources;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,6 +13,7 @@ namespace RestaurantBookingSystemMVC.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
+        private readonly JsonSerializerOptions _serializerOptions;
 
         private string _baseUri = "https://localhost:7168/api/";
 
@@ -19,6 +21,7 @@ namespace RestaurantBookingSystemMVC.Controllers
         {
             _httpClient = client;
             _logger = logger;
+            _serializerOptions = JsonHelper.JsonOptionsHelper();
         }
 
         public async Task<IActionResult> Index()
@@ -27,9 +30,8 @@ namespace RestaurantBookingSystemMVC.Controllers
             var response = await _httpClient.GetAsync(_baseUri + "reservations");
 
             var json = await response.Content.ReadAsStringAsync();
-            var jsonOptions = JsonHelper.JsonOptionsHelper();
 
-            var reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json, jsonOptions);
+            var reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json, _serializerOptions);
 
             return View(reservations);
         }
@@ -49,6 +51,40 @@ namespace RestaurantBookingSystemMVC.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(_baseUri + "reservations", content);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var response = await _httpClient.GetAsync(_baseUri + $"reservations/{id}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            
+            var reservation = JsonSerializer.Deserialize<Reservation>(json, _serializerOptions);
+
+            return View(reservation);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Reservation reservation)
+        {
+            var updateReservation = new UpdateReservationDTO
+            {
+                NumberOfGuests = reservation.NumberOfGuests,
+                CustomerEmail = reservation.Customer.Email,
+                CustomerName = reservation.Customer.Name,
+                CustomerPhone = reservation.Customer.Phone,
+                DateAndTime = reservation.DateAndTime,
+                TableId = reservation.Table.Id,
+                TableNumber = reservation.Table.TableNumber,
+            };
+
+            var json = JsonSerializer.Serialize(updateReservation);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            await _httpClient.PutAsync(_baseUri + $"reservations/{reservation.Id}", content);
 
             return RedirectToAction("Index");
         }
