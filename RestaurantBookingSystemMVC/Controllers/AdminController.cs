@@ -23,18 +23,5 @@ namespace RestaurantBookingSystemMVC.Controllers
         {
             return View();
         }
-
-        // TODO: Move to separate controller.
-        public async Task<IActionResult> Menu()
-        {
-            var response = await _httpClient.GetAsync(_baseUri + "menuitems");
-
-            var json = await response.Content.ReadAsStringAsync();
-            var jsonOptions = JsonHelper.JsonOptionsHelper();
-
-            var menuItems = JsonSerializer.Deserialize<List<MenuItem>>(json, jsonOptions);
-
-            return View(menuItems);
-        }
     }
 }

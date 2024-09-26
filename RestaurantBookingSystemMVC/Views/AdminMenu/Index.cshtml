@@ -1,0 +1,102 @@
+﻿@using RestaurantBookingSystemMVC.Models.MenuItem
+@model IEnumerable<MenuItem>;
+
+@{
+    ViewData["Title"] = "Admin Menu";
+    Layout = "_AdminLayout";
+}
+
+<section class="admin-wrapper">
+    <section class="admin-content-window">
+        <h2 class="display-3">Menu</h2>
+
+        <a asp-action="Create" asp-controller="AdminMenu" class="btn btn-outline-primary" style="margin-bottom: 1rem;">Create Menu Item</a>
+
+        <table class="table table-hover" style="border: 1px solid gray">
+            <thead>
+                <tr>
+                    <th scope="col">Menuitem</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Available</th>
+                    <th scope="col">Popular</th>
+                </tr>
+            </thead>
+
+            @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
+            {
+                @* <h3 class="display-3">@category.Name</h3> *@
+
+                <tr class="table-dark">
+                    <th scope="row">@category.Name</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                @foreach (var menuItem in Model.Where(i => i.Category.Id == category.Id))
+                {
+                    <tr class="table-secondary">
+                        <th scope="row">@menuItem.Name</th>
+                        <td>@menuItem.Price</td>
+                        <td>@menuItem.Description</td>
+                        <td>
+                            @if (menuItem.IsAvailable)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (menuItem.IsPopular)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="AdminMenu" asp-action="Edit" asp-route-id=@menuItem.Id class="btn btn-dark btn-sm">Edit</a>
+
+                            @* DELETE MODAL *@
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@menuItem.Id">Delete</button>
+                            <div class="modal fade" id="deleteModal-@menuItem.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-@menuItem.Id" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel-@menuItem.Id">Delete Reservation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                Are you sure you want to delete menu item @menuItem.Name?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="post" asp-action="Delete" style="display:inline;">
+                                                <input type="hidden" name="id" value="@menuItem.Id" />
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </section>
+</section>

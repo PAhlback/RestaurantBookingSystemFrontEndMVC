@@ -4,82 +4,119 @@
 @{
     ViewData["Title"] = "Admin Reservations";
     Layout = "_AdminLayout";
-    int iterator = 1;
     string rowClass = "table-primary";
     DateOnly date = DateOnly.FromDateTime(Model.First().DateAndTime);
 }
 
-<section class="admin-wrapper">
-    <section class="admin-content-window">
-        <h3 class="display-3">Reservations</h3>
+<section class="admin-content-window">
+    <h3 class="display-3">Reservations</h3>
 
-        <a asp-action="Create" asp-controller="AdminReservations" class="btn btn-outline-primary" style="margin-bottom: 1rem;">Create Reservation</a>
+    <a asp-action="Create" asp-controller="AdminReservations" class="btn btn-outline-primary" style="margin-bottom: 1rem;">Create Reservation</a>
 
-        <table class="table table-hover" style="border: 1px solid gray">
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Table#</th>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Number of Guests</th>
-                    <th scope="col">Id</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var reservation in Model)
+    <table class="table table-hover" style="border: 1px solid gray">
+        <thead style="border-bottom: 1px solid gray;">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Table#</th>
+                <th scope="col">Customer</th>
+                <th scope="col">No. of Guests</th>
+                <th scope="col">Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                DateOnly currentDate = DateOnly.FromDateTime(reservation.DateAndTime);
+                if (date != currentDate)
                 {
-                    DateOnly currentDate = DateOnly.FromDateTime(reservation.DateAndTime);
-                    if (date != currentDate)
-                    {
-                        rowClass = rowClass == "table-primary" ? "table-secondary" : "table-primary";
+                    rowClass = rowClass == "table-primary" ? "table-secondary" : "table-primary";
 
-                        date = currentDate;
-                    }
+                    date = currentDate;
+                }
 
-                    <tr class="@rowClass">
-                        <th scope="row">@reservation.DateAndTime.ToShortDateString()</th>
-                        <td>@reservation.DateAndTime.ToShortTimeString()</td>
-                        <td>@reservation.Table.TableNumber</td>
-                        <td>@reservation.Customer.Name</td>
-                        <td>@reservation.NumberOfGuests</td>
-                        <td>@reservation.Id</td>
-                        <td>
+                <tr class="@rowClass">
+                    <th scope="row">@reservation.DateAndTime.ToShortDateString()</th>
+                    <td>@reservation.DateAndTime.ToShortTimeString()</td>
+                    <td>@reservation.Table.TableNumber</td>
+                    <td>@reservation.Customer.Name</td>
+                    <td>@reservation.NumberOfGuests</td>
+                    <td>@reservation.Id</td>
+                    <td>
                         @* Possibly add modal for editing *@
-                            <a asp-controller="AdminReservations" asp-action="Edit" asp-route-id=@reservation.Id class="btn btn-dark btn-sm">Edit</a>
+                        <a asp-controller="AdminReservations" asp-action="Edit" asp-route-id=@reservation.Id class="btn btn-dark btn-sm">Edit</a>
 
-                            @* DELETE MODAL *@
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Reservation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
+                        @* DETAILS MODAL *@
+                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-@reservation.Id">Details</button>
+                        <div class="modal fade" id="detailsModal-@reservation.Id" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel-@reservation.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="detailsModalLabel-@reservation.Id">Details for ID: @reservation.Id</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Reservation</h5>
+                                        <div class="modal-background-gray">
+                                            <p>Guests: @reservation.NumberOfGuests</p>
+                                            <p>Date: @reservation.DateAndTime.ToShortDateString()</p>
+                                            <p>Time: @reservation.DateAndTime.ToShortTimeString()</p>
                                         </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete reservation for 
-                                                @reservation.Customer.Name 
-                                                on 
-                                                @reservation.DateAndTime.ToShortDateString() @reservation.DateAndTime.ToShortTimeString()?</p>
+                                        <h5>Customer</h5>
+                                        <div class="modal-background-gray">
+                                            <p>Name: @reservation.Customer.Name</p>
+                                            <p>Email: @reservation.Customer.Email</p>
+                                            <p>Phone: @reservation.Customer.Phone</p>
                                         </div>
-                                        <div class="modal-footer">
-                                            <form method="post" asp-action="Delete" style="display:inline;">
-                                                <input type="hidden" name="id" value="@reservation.Id" />
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <h5>Table</h5>
+                                        <div class="modal-background-gray">
+                                            <p>Number: @reservation.Table.TableNumber</p>
+                                            <p>Seats: @reservation.Table.NumberOfSeats</p>
                                         </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a asp-controller="AdminReservations" asp-action="Edit" asp-route-id=@reservation.Id class="btn btn-dark btn-sm">Edit</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </section>
+                        @* DELETE MODAL *@
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@reservation.Id">Delete</button>
+                        <div class="modal fade" id="deleteModal-@reservation.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-@reservation.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel-@reservation.Id">Delete Reservation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Are you sure you want to delete reservation for
+                                            @reservation.Customer.Name
+                                            on
+                                            @reservation.DateAndTime.ToShortDateString() @reservation.DateAndTime.ToShortTimeString()?
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" asp-action="Delete" style="display:inline;">
+                                            <input type="hidden" name="id" value="@reservation.Id" />
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </section>

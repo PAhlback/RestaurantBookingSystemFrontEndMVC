@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Admin\Menu\" />
-    <Folder Include="Views\Admin\Reservations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

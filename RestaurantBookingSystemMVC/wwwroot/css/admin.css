@@ -19,3 +19,8 @@
 .admin-content-window {
     padding: 1rem;
 }
+
+.modal-background-gray {
+    background-color: #d3d3d363;
+    padding: 0.5rem;
+}
