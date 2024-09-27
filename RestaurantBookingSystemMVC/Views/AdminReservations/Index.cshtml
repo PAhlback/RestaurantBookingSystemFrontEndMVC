@@ -27,6 +27,7 @@
         <tbody>
             @foreach (var reservation in Model)
             {
+                // Alternates the color of table row. Rows are grouped by date.
                 DateOnly currentDate = DateOnly.FromDateTime(reservation.DateAndTime);
                 if (date != currentDate)
                 {

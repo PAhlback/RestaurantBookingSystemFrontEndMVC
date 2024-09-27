@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantBookingSystemMVC.Helpers;
 using RestaurantBookingSystemMVC.Models.Reservation;
+using System.Net;
 using System.Net.Http;
 using System.Resources;
 using System.Text;
@@ -9,6 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace RestaurantBookingSystemMVC.Controllers
 {
+    [Authorize]
     public class AdminReservationsController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -17,21 +20,25 @@ namespace RestaurantBookingSystemMVC.Controllers
 
         private string _baseUri = "https://localhost:7168/api/";
 
-        public AdminReservationsController(HttpClient client, ILogger<HomeController> logger)
+        public AdminReservationsController(HttpClient httpClient, ILogger<HomeController> logger)
         {
-            _httpClient = client;
             _logger = logger;
             _serializerOptions = JsonHelper.JsonOptionsHelper();
+            _httpClient = httpClient;
         }
 
         public async Task<IActionResult> Index()
         {
             Console.Out.WriteLine("Reservations index");
+
             var response = await _httpClient.GetAsync(_baseUri + "reservations");
+
+            //if (!response.IsSuccessStatusCode)
+            //    return RedirectToAction("Login", "Admin");
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json, _serializerOptions);
+            var reservations = JsonSerializer.Deserialize<List<Reservation>>(json, _serializerOptions);
 
             return View(reservations);
         }

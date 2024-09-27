@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantBookingSystemMVC.Helpers;
 using RestaurantBookingSystemMVC.Models.MenuItem;
 using RestaurantBookingSystemMVC.Models.MenuItem.DTOs;
@@ -9,6 +10,7 @@ using System.Text.Json;
 
 namespace RestaurantBookingSystemMVC.Controllers
 {
+    [Authorize]
     public class AdminMenuController : Controller
     {
         private readonly HttpClient _httpClient;
