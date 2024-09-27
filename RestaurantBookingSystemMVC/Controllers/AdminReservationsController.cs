@@ -29,7 +29,7 @@ namespace RestaurantBookingSystemMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Console.Out.WriteLine("Reservations index");
+            _logger.LogInformation("---- INFO AdminReservationsController: Getting reservations");
 
             var response = await _httpClient.GetAsync(_baseUri + "reservations");
 
@@ -39,6 +39,8 @@ namespace RestaurantBookingSystemMVC.Controllers
             var json = await response.Content.ReadAsStringAsync();
 
             var reservations = JsonSerializer.Deserialize<List<Reservation>>(json, _serializerOptions);
+
+            _logger.LogInformation("---- INFO AdminReservationsController: Returning reservations {Description}", json);
 
             return View(reservations);
         }
