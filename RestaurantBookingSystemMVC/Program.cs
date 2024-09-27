@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using RestaurantBookingSystemMVC.Helpers;
-using System.Net;
-using System.Net.Http;
 
 namespace RestaurantBookingSystemMVC
 {
@@ -13,14 +10,15 @@ namespace RestaurantBookingSystemMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
             builder.Services.AddHttpClient();
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.Cookie.Name = "MyCookieName";
                     options.LoginPath = "/Admin/Login";
+                    options.LogoutPath = "/Admin/Logout";
                     options.Cookie.SameSite = SameSiteMode.None;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.Cookie.HttpOnly = true;

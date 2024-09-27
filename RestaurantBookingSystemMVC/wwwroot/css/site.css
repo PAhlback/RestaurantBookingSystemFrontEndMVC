@@ -44,25 +44,25 @@ main .main-container {
     background-repeat: no-repeat;
 }
 
-.homepage-hero-image::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-}
+    .homepage-hero-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+    }
 
-.homepage-hero-image h1 {
-    position: relative;
-    z-index: 10;
-    color: white;
-}
+    .homepage-hero-image h1 {
+        position: relative;
+        z-index: 10;
+        color: white;
+    }
 
 .homepage-hero-text h1 {
-    font-size: 8rem;
+    /*    font-size: 8rem;*/
     font-weight: 400;
     font-family: 'Baskerville Old Face';
 }
@@ -75,16 +75,16 @@ main .main-container {
     text-align: center;
 }
 
-.homepage-introduction-container p {
-    width: 50%;
-    align-self: center;
-}
+    .homepage-introduction-container p {
+        width: 50%;
+        align-self: center;
+    }
 
-.homepage-introduction-container img {
-    width: 80%;
-    align-self: center;
-    border-radius: 12px;
-}
+    .homepage-introduction-container img {
+        width: 80%;
+        align-self: center;
+        border-radius: 12px;
+    }
 
 .popular-menu-items-container {
     background: rgb(39,255,0);
@@ -92,9 +92,10 @@ main .main-container {
     justify-content: space-evenly;
     text-align: center;
 }
-.popular-menu-items-container h3 {
-    padding: 1rem;
-}
+
+    .popular-menu-items-container h3 {
+        padding: 1rem;
+    }
 
 .homepage-popular-menu-items {
     display: flex;
@@ -119,16 +120,18 @@ main .main-container {
     background-position: center;
     background-repeat: no-repeat;
 }
-.menupage-hero-image::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 0;
-}
+
+    .menupage-hero-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 0;
+    }
+
 .menu-section {
     z-index: 1;
     text-align: center;
@@ -137,10 +140,12 @@ main .main-container {
     justify-content: center;
     align-items: center;
 }
-.menu-section h2 {
-    color: white;
-    font-family: 'Baskerville Old Face';
-}
+
+    .menu-section h2 {
+        color: white;
+        font-family: 'Baskerville Old Face';
+    }
+
 .menu-item-category-container {
     margin: 2rem;
     max-width: 60%;
@@ -151,7 +156,35 @@ main .main-container {
     html {
         font-size: 16px;
     }
+
+    .homepage-hero-text h1 {
+        font-size: 8rem;
+    }
 }
+
+@media (max-width: 750px) {
+    .homepage-hero-text {
+        min-width: 100vw;
+        min-height: auto;
+        padding: 2vw;
+    }
+
+    .homepage-introduction-container {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .homepage-introduction-container p {
+        width: 80%;
+        padding: 0.5rem;
+        align-self: center;
+    }
+
+}
+
+
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;

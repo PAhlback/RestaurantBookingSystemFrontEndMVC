@@ -33,18 +33,29 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Reserve Table</a>
                         </li>
                         @* About to be implemented *@
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">About</a>
-                        </li>
+                        </li> *@
                         @* Contact to be implemented *@
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
-                        </li>
-                        @* Login to be implemented *@
-                        @* Will lead to admin page upon successful login *@
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Login">Login</a>
-                        </li>
+                        </li> *@
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <form asp-controller="Admin" asp-action="Logout" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-light">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
