@@ -43,6 +43,8 @@ namespace RestaurantBookingSystemMVC.Controllers
                 if (popularItemsList == null) 
                     return View();
 
+                _cache.Set("PopularItemsList", popularItemsList);
+
                 return View(popularItemsList);
             }
             catch (Exception ex) { }

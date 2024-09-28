@@ -47,34 +47,40 @@ namespace RestaurantBookingSystemMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            var response = await _httpClient.PostAsJsonAsync("users/login", loginDTO);
-
-            if (!response.IsSuccessStatusCode)
-                return View(loginDTO);
-
-            var json = await response.Content.ReadAsStringAsync();
-            AdminUser? user = JsonSerializer.Deserialize<AdminUser>(json, _jsonOptions);
-            if (user == null)
-                return BadRequest("User does not exist.");
-
-            var cookies = response.Headers.GetValues("Set-Cookie");
-            foreach (var cookie in cookies)
+            try
             {
-                Response.Headers.Append("Set-Cookie", cookie);
+                var response = await _httpClient.PostAsJsonAsync("users/login", loginDTO);
+                if (!response.IsSuccessStatusCode)
+                    return View(loginDTO);
+
+                var json = await response.Content.ReadAsStringAsync();
+                AdminUser? user = JsonSerializer.Deserialize<AdminUser>(json, _jsonOptions);
+                if (user == null)
+                    return BadRequest("User does not exist.");
+
+                var cookies = response.Headers.GetValues("Set-Cookie");
+                foreach (var cookie in cookies)
+                {
+                    Response.Headers.Append("Set-Cookie", cookie);
+                }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                return RedirectToAction("Index", "Admin");
             }
-
-            var claims = new List<Claim>
+            catch (Exception ex)
             {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}")
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
-
-            return RedirectToAction("Index", "Admin");
+                return View(loginDTO);
+            }            
         }
 
         [HttpPost]

@@ -29,20 +29,26 @@ namespace RestaurantBookingSystemMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            _logger.LogInformation("---- INFO AdminReservationsController: Getting reservations");
+            try
+            {
+                _logger.LogInformation("---- INFO AdminReservationsController: Getting reservations");
 
-            var response = await _httpClient.GetAsync(_baseUri + "reservations");
+                var response = await _httpClient.GetAsync(_baseUri + "reservations");
 
-            //if (!response.IsSuccessStatusCode)
-            //    return RedirectToAction("Login", "Admin");
+                //if (!response.IsSuccessStatusCode)
+                //    return RedirectToAction("Login", "Admin");
 
-            var json = await response.Content.ReadAsStringAsync();
+                var json = await response.Content.ReadAsStringAsync();
 
-            var reservations = JsonSerializer.Deserialize<List<Reservation>>(json, _serializerOptions);
+                var reservations = JsonSerializer.Deserialize<List<Reservation>>(json, _serializerOptions);
 
-            _logger.LogInformation("---- INFO AdminReservationsController: Returning reservations {Description}", json);
+                _logger.LogInformation("---- INFO AdminReservationsController: Returning reservations {Description}", json);
 
-            return View(reservations);
+                return View(reservations);
+            }
+            catch (Exception ex) { }
+
+            return View();
         }
 
         public async Task<IActionResult> Create()

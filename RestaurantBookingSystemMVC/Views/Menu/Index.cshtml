@@ -11,6 +11,11 @@
         <section class="menu-section">
             <h2 class="display-2 text-light"><strong>Menu</strong></h2>
 
+                <form class="d-flex">
+                    <input class="form-control me-sm-2" name="searchQuery" type="text" placeholder="Search Name or Price">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+
             @foreach (var category in Model.Select(m => m.Category).DistinctBy(c => c.Id))
             {
                 <article class="menu-item-category-container">
